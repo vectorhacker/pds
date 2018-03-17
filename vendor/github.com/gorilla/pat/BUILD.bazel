@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "doc.go",
+        "pat.go",
+    ],
+    importpath = "github.com/gorilla/pat",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/gorilla/context:go_default_library",
+        "//vendor/github.com/gorilla/mux:go_default_library",
+    ],
+)

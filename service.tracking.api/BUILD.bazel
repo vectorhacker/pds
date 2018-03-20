@@ -6,7 +6,10 @@ go_library(
     srcs = ["main.go"],
     importpath = "github.com/vectorhacker/pds/service.tracking.api",
     visibility = ["//visibility:private"],
-    deps = ["//vendor/github.com/gorilla/pat:go_default_library"],
+    deps = [
+        "//service.tracking.api/proto:go_default_library",
+        "//vendor/google.golang.org/grpc:go_default_library",
+    ],
 )
 
 go_binary(
@@ -32,6 +35,6 @@ load(
 container_image(
     name = "docker",
     base = "@alpine_base//image",
-    files = [":service.tracking.api_linux"],
     cmd = ["/service.tracking.api_linux"],
+    files = [":service.tracking.api_linux"],
 )

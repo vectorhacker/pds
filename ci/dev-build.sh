@@ -14,7 +14,9 @@ declare -a targets=($(
     done | sort -u
 ))
 
-nomad run fabio_development.nomad
+# run infrastructure
+nomad run nomad/fabio_development.nomad
+nomad run nomad/linkerd_development.nomad
 
 ## now loop through the above array
 for target in "${targets[@]}"

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package api;
+
+service Tracking {
+    rpc Track (Request) returns (Response);
+}
+
+message Request {
+}
+
+message Response {
+}

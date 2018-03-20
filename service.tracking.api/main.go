@@ -1,18 +1,34 @@
 package main
 
 import (
+	"context"
 	"fmt"
-	"net/http"
+	"net"
 
-	"github.com/gorilla/pat"
+	pb "github.com/vectorhacker/pds/service.tracking.api/proto"
+	"google.golang.org/grpc"
 )
 
+type trackingServer struct {
+}
+
+func (*trackingServer) Track(ctx context.Context, r *pb.Request) (*pb.Response, error) {
+	return &pb.Response{}, nil
+}
+
+func newServer() *trackingServer {
+	s := &trackingServer{}
+	return s
+}
+
 func main() {
-	r := pat.New()
+	lis, err := net.Listen("tcp", fmt.Sprintf("0.0.0.0:%d", 5000))
+	if err != nil {
+		panic(err)
+	}
 
-	r.Get("/hello", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello World\n")
-	})
-
-	http.ListenAndServe("0.0.0.0:8080", r)
+	var opts []grpc.ServerOption
+	grpcServer := grpc.NewServer(opts...)
+	pb.RegisterTrackingServer(grpcServer, newServer())
+	grpcServer.Serve(lis)
 }

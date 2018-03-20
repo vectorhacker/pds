@@ -98,7 +98,7 @@ job "service.tracking.api" {
         image = "localhost:5000/service.tracking.api"
         
         port_map {
-          http = 8080
+          grpc = 5000
         }
       }
 
@@ -108,7 +108,7 @@ job "service.tracking.api" {
         
         network {
           mbits = 1
-          port "http" {}
+          port "grpc" {}
         }
       }
 
@@ -123,8 +123,11 @@ job "service.tracking.api" {
       #     https://www.nomadproject.io/docs/job-specification/service.html
       #
       service {
-        name = "global-api-check"
-        port = "http"
+        name = "service-tracking-api"
+        port = "grpc"
+        
+        tags = ["grpc"]
+
         check {
           name     = "alive"
           type     = "tcp"

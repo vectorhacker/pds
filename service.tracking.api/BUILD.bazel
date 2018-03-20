@@ -10,20 +10,6 @@ go_library(
 )
 
 go_binary(
-    name = "service.tracking.api_darwin",
-    embed = [":go_default_library"],
-    gc_linkopts = [
-        "-extldflags",
-        "-static",
-    ],
-    goarch = "amd64",
-    goos = "darwin",
-    pure = "on",
-    static = "on",
-    visibility = ["//visibility:public"],
-)
-
-go_binary(
     name = "service.tracking.api_linux",
     embed = [":go_default_library"],
     gc_linkopts = [
@@ -46,6 +32,6 @@ load(
 container_image(
     name = "docker",
     base = "@alpine_base//image",
-    cmd = ["/service.tracking.api_linux"],
     files = [":service.tracking.api_linux"],
+    cmd = ["/service.tracking.api_linux"],
 )

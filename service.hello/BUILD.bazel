@@ -1,0 +1,41 @@
+# go
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["main.go"],
+    importpath = "github.com/vectorhacker/pds/service.hello",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//service.hello/proto:go_default_library",
+        "//vendor/github.com/spf13/viper:go_default_library",
+        "//vendor/google.golang.org/grpc:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "service.hello_linux",
+    embed = [":go_default_library"],
+    gc_linkopts = [
+        "-extldflags",
+    ],
+    goarch = "amd64",
+    goos = "linux",
+    pure = "on",
+    static = "on",
+    visibility = ["//visibility:public"],
+)
+
+# docker
+load(
+    "@io_bazel_rules_docker//container:container.bzl",
+    "container_image",
+    "container_push",
+)
+
+container_image(
+    name = "docker",
+    base = "@alpine_base//image",
+    cmd = ["/service.hello_linux"],
+    files = [":service.hello_linux"],
+)

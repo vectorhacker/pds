@@ -45,16 +45,30 @@ admin:
   ip: 0.0.0.0
 routers:
 - protocol: h2
-  experimental: true
-  servers:
-  - port: {{ env "NOMAD_PORT_grpc" }}
-    ip: 0.0.0.0 
+  label: outgoing
+  dtab: |
+    /srv        => /#/io.l5d.consul/dc1/grpc;
+    /grpc       => /srv;
+    /svc        => /$/io.buoyant.http.domainToPathPfx/grpc;
   identifier:
     kind: io.l5d.header.path
-  dstPrefix: /grpc
-  label: grpc
+    segments: 1
+  servers:
+  - port: {{ env "NOMAD_PORT_outgoing" }}
+    ip: 0.0.0.0
+
+- protocol: h2
+  label: incoming
   dtab: |
-    /svc => /#/io.l5d.consul/dc1/grpc;
+    /srv        => /#/io.l5d.consul/dc1/grpc;
+    /grpc       => /srv;
+    /svc        => /$/io.buoyant.http.domainToPathPfx/grpc;
+  identifier:
+    kind: io.l5d.header.path
+    segments: 1
+  servers:
+  - port: {{ env "NOMAD_PORT_incomming" }}
+    ip: 0.0.0.0
 namers:
 - kind: io.l5d.consul
   host: 127.0.0.1
@@ -81,8 +95,12 @@ namers:
                         static = 9990
                     }
 
-                    port "grpc" {
-                        static = 6000
+                    port "incomming" {
+                        static = 4141
+                    }
+                    
+                    port "outgoing" {
+                        static = 4140
                     }
                 }
             }

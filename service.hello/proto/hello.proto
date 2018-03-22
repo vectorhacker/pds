@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package api;
+
+// This name is the one that gets registered in service discovery
+service Hello {
+    rpc Greet (Request) returns (Response);
+}
+
+message Request {
+    string name = 1;
+}
+
+message Response {
+    string greeting = 1;
+}

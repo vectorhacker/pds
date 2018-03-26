@@ -22,7 +22,6 @@ go_binary(
     ],
     goarch = "amd64",
     goos = "linux",
-    pure = "on",
     static = "on",
     visibility = ["//visibility:public"],
 )

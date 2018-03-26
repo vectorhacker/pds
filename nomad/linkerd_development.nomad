@@ -102,6 +102,10 @@ namers:
                     port "outgoing" {
                         static = 4140
                     }
+
+                    port "web" {
+                        static = 8080
+                    }
                 }
             }
         }

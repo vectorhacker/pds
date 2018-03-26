@@ -51,7 +51,7 @@ job "service.hello.api" {
     # The "count" parameter specifies the number of the task groups that should
     # be running under this group. This value must be non-negative and defaults
     # to 1.
-    count = 2
+    count = 3
 
     # The "restart" stanza configures a group's behavior on task failure. If
     # left unspecified, a default restart policy is used based on the job type.
@@ -131,7 +131,7 @@ job "service.hello.api" {
         name = "hello-api"
         port = "http"
         
-        tags = ["http", "urlprefix-/hello"]
+        tags = ["http", "urlprefix-/hello", "web"]
 
         check {
           name     = "alive"

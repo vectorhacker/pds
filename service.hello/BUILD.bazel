@@ -13,11 +13,8 @@ go_library(
 )
 
 go_binary(
-    name = "service.hello_linux",
+    name = "service.hello",
     embed = [":go_default_library"],
-    gc_linkopts = [
-        "-extldflags",
-    ],
     goarch = "amd64",
     goos = "linux",
     static = "on",
@@ -28,12 +25,13 @@ go_binary(
 load(
     "@io_bazel_rules_docker//container:container.bzl",
     "container_image",
-    "container_push",
 )
 
 container_image(
     name = "docker",
+    # References container_pull from WORKSPACE (above)
     base = "@alpine_base//image",
-    cmd = ["/service.hello_linux"],
-    files = [":service.hello_linux"],
+    cmd = ["./service.hello"],
+    files = [":service.hello"],
+    visibility = ["//visibility:public"],
 )

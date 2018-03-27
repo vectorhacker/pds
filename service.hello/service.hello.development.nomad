@@ -51,7 +51,7 @@ job "service.hello" {
     # The "count" parameter specifies the number of the task groups that should
     # be running under this group. This value must be non-negative and defaults
     # to 1.
-    count = 5
+    count = 2
 
     # The "restart" stanza configures a group's behavior on task failure. If
     # left unspecified, a default restart policy is used based on the job type.

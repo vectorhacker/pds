@@ -1,4 +1,4 @@
-package handlers_test
+package handlers
 
 import (
 	"bytes"
@@ -11,8 +11,6 @@ import (
 
 	pb "github.com/vectorhacker/pds/service.hello/proto"
 	"google.golang.org/grpc"
-
-	"github.com/vectorhacker/pds/service.hello.api/handlers"
 )
 
 type c struct{}
@@ -34,11 +32,11 @@ func TestHandleHello(t *testing.T) {
 	r.URL.RawQuery = q.Encode()
 
 	ctx := context.Background()
-	ctx = context.WithValue(ctx, "hello_client", client)
+	ctx = context.WithValue(ctx, "helloClient", client)
 
 	r = r.WithContext(ctx)
 
-	handlers.HandleHello(w, r)
+	HandleHello(w, r)
 
 	resp := w.Result()
 	body, _ := ioutil.ReadAll(resp.Body)

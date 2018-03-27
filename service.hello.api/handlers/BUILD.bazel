@@ -9,10 +9,10 @@ go_library(
 )
 
 go_test(
-    name = "go_default_xtest",
+    name = "go_default_test",
     srcs = ["handlers_test.go"],
+    embed = [":go_default_library"],
     deps = [
-        ":go_default_library",
         "//service.hello/proto:go_default_library",
         "//vendor/google.golang.org/grpc:go_default_library",
     ],

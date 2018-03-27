@@ -38,7 +38,7 @@ func main() {
 	router.Use(func(h http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			ctx := r.Context()
-			ctx = context.WithValue(ctx, "hello_client", client)
+			ctx = context.WithValue(ctx, "helloClient", client)
 			r = r.WithContext(ctx)
 
 			h.ServeHTTP(w, r)

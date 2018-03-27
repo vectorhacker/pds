@@ -14,7 +14,7 @@ var errLog = log.New(os.Stderr, "error: ", log.Lshortfile)
 func HandleHello(w http.ResponseWriter, r *http.Request) {
 	log.Println("Hello api started")
 
-	hello := r.Context().Value("hello_client").(pb.HelloClient)
+	hello := r.Context().Value("helloClient").(pb.HelloClient)
 	name := r.URL.Query().Get(":name")
 
 	res, err := hello.Greet(r.Context(), &pb.Request{
